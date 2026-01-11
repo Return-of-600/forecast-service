@@ -1,6 +1,8 @@
 package com.stock.forecast_service.domain.example.controller;
 
-import com.stock.forecast_service.domain.example.dto.ExampleDto;
+import com.stock.forecast_service.common.exception.code.CommonErrorCode;
+import com.stock.forecast_service.common.exception.CoreException;
+import com.stock.forecast_service.common.exception.code.UserErrorCode;
 import com.stock.forecast_service.domain.example.entity.Example;
 import com.stock.forecast_service.domain.example.service.ExampleService;
 import lombok.RequiredArgsConstructor;
@@ -25,5 +27,10 @@ public class ExampleController {
     return service.findByNameMyBatis(name);
   }
 
+  @GetMapping("/ex")
+  public void checkException() {
+    throw new IllegalArgumentException("예상치 못한 예외");
+    // throw new CoreException(UserErrorCode.USER_NOT_FOUND);
+  }
 
 }

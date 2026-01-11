@@ -1,6 +1,11 @@
 spring:
   application:
     name: forecast-service
+
+  web:
+    resources:
+      add-mappings: false # NoHandlerFoundException 발생 시, static 파일까지 찾아보는걸 방지.
+
   profiles:
     active: dev
 
