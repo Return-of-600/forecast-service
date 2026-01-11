@@ -9,7 +9,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ErrorResponse {
 
-  private final Boolean success = false;
   private final String code;
   private final String message;
 

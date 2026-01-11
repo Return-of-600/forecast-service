@@ -3,11 +3,11 @@ package com.stock.forecast_service.common.exception;
 import lombok.Getter;
 
 @Getter
-public class CoreException extends RuntimeException {
+public class CustomException extends RuntimeException {
 
   private final ErrorCode errorCode;
 
-  public CoreException(ErrorCode errorCode) {
+  public CustomException(ErrorCode errorCode) {
     super(errorCode.getMessage());
     this.errorCode = errorCode;
   }

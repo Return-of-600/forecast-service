@@ -1,9 +1,7 @@
 package com.stock.forecast_service.common.exception;
 
+import com.stock.forecast_service.common.api.ApiResponse;
 import com.stock.forecast_service.common.exception.code.CommonErrorCode;
-import com.stock.forecast_service.common.exception.CoreException;
-import com.stock.forecast_service.common.exception.ErrorCode;
-import com.stock.forecast_service.common.exception.ErrorResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatusCode;
@@ -18,34 +16,24 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @Slf4j
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
-  @ExceptionHandler(CoreException.class)
-  public ResponseEntity<?> handleCustomException(CoreException e) {
-    ErrorCode errorCode = e.getErrorCode();
-
-    return ResponseEntity.status(errorCode.getHttpStatus())
-        .body(makeErrorResponse(errorCode));
+  @ExceptionHandler(CustomException.class)
+  public ApiResponse<?> handleCustomException(CustomException e) {
+    return ApiResponse.fail(e);
   }
 
   @ExceptionHandler(Exception.class)
-  public ResponseEntity<?> handleException(Exception e) {
-    log.warn("Unhandled exception ", e);
+  public ApiResponse<?> handleException(Exception e) {
+    log.error("Unhandled exception ", e);
 
-    ErrorCode errorCode = CommonErrorCode.INTERNAL_SERVER_ERROR;
-    return ResponseEntity.status(errorCode.getHttpStatus())
-        .body(makeErrorResponse(errorCode));
+    return ApiResponse.fail(CommonErrorCode.INTERNAL_SERVER_ERROR);
   }
 
   @Override
   public ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
     ErrorCode errorCode = CommonErrorCode.INVALID_PARAMETER;
-    return handleExceptionInternal(ex, errorCode);
-  }
-
-  private ResponseEntity<Object> handleExceptionInternal(Exception e, ErrorCode errorCode) {
-    log.warn("handleExceptionInternal", e);
-
-    return ResponseEntity.status(errorCode.getHttpStatus())
-        .body(makeErrorResponse(errorCode, e.getMessage()));
+    return ResponseEntity
+        .status(errorCode.getHttpStatus())
+        .body(makeErrorResponse(errorCode, ex.getMessage()));
   }
 
   private ErrorResponse makeErrorResponse(ErrorCode errorCode) {
