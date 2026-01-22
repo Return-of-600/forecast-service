@@ -1,4 +1,4 @@
-package com.stock.forecast_service.common.api;
+package com.stock.forecast_service.common.interceptor;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -36,6 +36,7 @@ public class LoggingInterceptor implements HandlerInterceptor {
     log.info("Response Status : [{}]", response.getStatus());
   }
 
+  // Request Param 로깅을 위해 사용.
   private Map<String, String> getRequestParams(HttpServletRequest request) {
     Map<String, String> paramMap = new HashMap<>();
     Enumeration<String> parameterNames = request.getParameterNames();
