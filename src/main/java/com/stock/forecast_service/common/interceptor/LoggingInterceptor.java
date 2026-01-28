@@ -18,10 +18,21 @@ public class LoggingInterceptor implements HandlerInterceptor {
 
   @Override
   public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+    if (request instanceof CustomHttpRequestWrapper) {
+      CustomHttpRequestWrapper requestWrapper = (CustomHttpRequestWrapper) request;
+      String requestBody = new String(requestWrapper.getRequestBody());
+
+      // Request Body가 있을 경우 로깅
+      if (!requestBody.isEmpty()) {
+        log.info("Request Method: [{}] URL: [{}] Body: [{}]", request.getMethod(), request.getRequestURI(), requestBody);
+      }
+    }
+
     if (request.getParameterNames().hasMoreElements()) {
-      log.info("Request Method: [{}] URL: [{}] Params: [{}]",request.getMethod(), request.getRequestURI(), getRequestParams(request));
-    } else {
-      log.info("Request Method: [{}] URL: [{}]",request.getMethod(), request.getRequestURI());
+      log.info("Request Method: [{}] URL: [{}] Params: [{}]", request.getMethod(), request.getRequestURI(), getRequestParams(request));
+    }
+    else {
+      log.info("Request Method: [{}] URL: [{}]", request.getMethod(), request.getRequestURI());
     }
 
     return true;
