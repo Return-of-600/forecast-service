@@ -35,3 +35,13 @@ mybatis:
   type-aliases-package: com.stock.forecast_service
   configuration:
     map-underscore-to-camel-case: true
+
+# Spring boot actuator
+management:
+  server:
+    port: 8080
+  endpoints:
+    web:
+      exposure:
+        include: "health"
+

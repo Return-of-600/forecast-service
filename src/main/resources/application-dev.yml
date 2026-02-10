@@ -8,3 +8,23 @@ logging:
     root: INFO
     org.hibernate.SQL: DEBUG
     org.hibernate.type.descriptor.sql: TRACE
+
+    org:
+      springframework:
+        security:
+          web:
+            FilterChainProxy: DEBUG
+
+# Spring boot actuator
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+
+# JWT
+jwt:
+  secret-key: kQw14mwGAeOJDc7r0ctnnqb4FCzuDgulLjlhpcz+bLw=

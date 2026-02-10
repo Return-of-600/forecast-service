@@ -8,3 +8,7 @@ logging:
     root: INFO
     org.hibernate.SQL: OFF
     org.hibernate.type.descriptor.sql: OFF
+
+
+jwt:
+  secret-key: 58ZiHzC/qlkX1mNPE0+n6Q1LLYH0v2i4ytzbvccAJbI=
